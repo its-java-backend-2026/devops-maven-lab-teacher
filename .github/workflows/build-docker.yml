@@ -41,22 +41,3 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
-
-  deploy:
-    needs: [publish]
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Installa Render CLI
-        run: |
-          curl -sL -o render-cli.zip "https://github.com/render-oss/cli/releases/download/v2.28.0/cli_2.28.0_linux_amd64.zip"
-          unzip -q render-cli.zip "cli_v2.28.0"
-          sudo install -m 0755 "cli_v2.28.0" /usr/local/bin/render
-
-      - name: Deploy dell'immagine appena pubblicata
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        run: |
-          render deploys create "${{ vars.RENDER_SERVICE_ID }}" \
-            --image "ghcr.io/${{ github.repository }}:latest" \
-            --wait --confirm --output json
