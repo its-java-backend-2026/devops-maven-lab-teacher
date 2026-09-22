@@ -23,4 +23,13 @@ class HealthServerTest {
     void rifiutaUnValorePortaNonNumerico() {
         assertThrows(IllegalArgumentException.class, () -> HealthServer.parsePort("abc"));
     }
+
+    @Test
+    void estraeParametroQueryNome() {
+        assertEquals("Mario", HealthServer.parseQueryParam("nome=Mario", "nome"));
+        assertEquals("Mario Rossi", HealthServer.parseQueryParam("nome=Mario+Rossi", "nome"));
+        assertEquals("Mario", HealthServer.parseQueryParam("foo=bar&nome=Mario&age=30", "nome"));
+        org.junit.jupiter.api.Assertions.assertNull(HealthServer.parseQueryParam(null, "nome"));
+        org.junit.jupiter.api.Assertions.assertNull(HealthServer.parseQueryParam("foo=bar", "nome"));
+    }
 }

@@ -37,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>it.its.devops.Main</mainClass>
+                            <mainClass>it.its.devops.web.HealthServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
